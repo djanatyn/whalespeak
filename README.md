@@ -1,6 +1,9 @@
 # whalespeak
 converts text to and from the language of the whales
 
+## dependencies
+- trollop
+
 ## usage
 ```
 ./whalespeak <args> 'text to convert'
