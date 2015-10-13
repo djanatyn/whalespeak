@@ -12,5 +12,5 @@ whales are very verbose.
 english | whalespeak
 --------|-----------
 hello i am a whale | dRdhroofruHuuhhdhUrRDoUDfdddrrDhFUDOFHFUfUdfoROhRROhDou 
-i sure do love the ocean | rhfuHuFoodfuHrdHRfFHHRoffUHRRRHrFdFhufFOUOrFfUUHuohHrdFuohudHHuhrodrHRDoUu
+i love krill | hfOoDFhfOudfuoudhUUofoUDDDRoDDfdFhodO
 bye | uhfdDofDH
