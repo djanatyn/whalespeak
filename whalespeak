@@ -14,10 +14,22 @@ require 'trollop'
 # also randomizes capitalization because whales are expressive sometimes.
 
 opts = Trollop::options do
+
+  banner <<-EOS
+whalespeak converts text to and from the language of the whales.
+
+usage: #{$0} <args> 'text to convert'
+
+where <args> are:
+EOS
+
   opt :to, "Convert text to whalespeak (default)", :short => 't', :default => true
   opt :from, "Convert text from whalespeak", :short => 'f'
   opt :randomize, "Randomize capitalization", :short => 'r', :default => true
+  
+  conflicts :to, :from
 end
+
 
 abort "usage: #{$0} 'text to convert'" unless ARGV.length == 1
 text_to_convert = ARGV[0].downcase
@@ -73,7 +85,6 @@ abort "too many characters in your whale language!" if whale_characters.length >
 end
 
 @base = @mapping.length
-
 
 if opts[:from]
   output = text_from_whalespeak(text_to_convert)
