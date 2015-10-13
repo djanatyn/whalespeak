@@ -16,7 +16,7 @@ require 'trollop'
 opts = Trollop::options do
   opt :to, "Convert text to whalespeak (default)", :short => 't', :default => true
   opt :from, "Convert text from whalespeak", :short => 'f'
-  opt :randomize, "Randomize capitalization", :short => 'r'
+  opt :randomize, "Randomize capitalization", :short => 'r', :default => true
 end
 
 abort "usage: #{$0} 'text to convert'" unless ARGV.length == 1
