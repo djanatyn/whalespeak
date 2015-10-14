@@ -15,24 +15,26 @@ require 'trollop'
 
 whale_characters = %w{o d u h w}
 
+usage = "usage: #{$0} <args> 'text to convert'"
+
 opts = Trollop::options do
   banner <<-EOS
 whalespeak converts text to and from the language of the whales.
 
-usage: #{$0} <args> 'text to convert'
+#{usage}
 
 where <args> are:
 EOS
 
-  opt :to, "Convert text to whalespeak (default)", :short => 't', :default => true
+  opt :to, "Convert text to whalespeak", :short => 't', :default => true
   opt :from, "Convert text from whalespeak", :short => 'f'
   opt :randomize, "Randomize capitalization", :short => 'r', :default => true
   
   conflicts :to, :from
 end
 
-
-abort "usage: #{$0} 'text to convert'" unless ARGV.length == 1
+# check for right command line args
+abort usage unless ARGV.length == 1
 text_to_convert = ARGV[0].downcase
 abort "can't convert an empty string!" if text_to_convert.empty?
 
