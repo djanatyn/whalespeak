@@ -13,28 +13,34 @@ require 'trollop'
 #
 # also randomizes capitalization because whales are expressive sometimes.
 
+$default_alphabet = %w{o d u h w}
+
 module Whalespeak
 
   module Exceptions
     class TooManyCharacters < Exception; end
   end
 
-  class Conversion
-    # choose characters for the language
-    @@whale_characters = %w{o d u h w}
-    if @@whale_characters.length > 10
-      raise Whalespeak::Exceptions::TooManyCharacters, "too many characters in the whale language"
+  class Converter
+    def initialize(alphabet = $default_alphabet)
+
+      raise ArgumentError, "alphabet must be an array of characters" unless alphabet.class == Array
+      @@whale_characters = alphabet
+
+      if @@whale_characters.length > 10
+        raise Whalespeak::Exceptions::TooManyCharacters, "too many characters in the whale language"
+      end
+
+      # generate mapping
+      @@mapping = {}
+      (0..@@whale_characters.length - 1).each do |n|
+        @@mapping[n.to_s] = @@whale_characters[n]
+      end
+
+      @@base = @@mapping.length
     end
 
-    # generate mapping
-    @@mapping = {}
-    (0..@@whale_characters.length - 1).each do |n|
-      @@mapping[n.to_s] = @@whale_characters[n]
-    end
-
-    @@base = @@mapping.length
-
-    def self.to_whalespeak text
+    def to_whalespeak text
       # convert the string supplied to binary
       binary = text.unpack('b*').first
 
@@ -50,7 +56,7 @@ module Whalespeak
       return whalespeak.join
     end
 
-    def self.from_whalespeak text
+    def from_whalespeak text
       # convert each character to it's respective digit
       base_string = text.chars.map {|char| @@mapping.invert[char]}.join
       

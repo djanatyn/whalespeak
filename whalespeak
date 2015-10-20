@@ -31,8 +31,11 @@ def randomize_capitalization text
   return capitalized_text.join
 end
 
+# initialize converter
+converter = Whalespeak::Converter.new
+
 if opts[:from]
-  output = Whalespeak::Conversion.from_whalespeak text_to_convert
+  output = converter.from_whalespeak text_to_convert
 
   if opts[:randomize]
     puts randomize_capitalization output
@@ -41,7 +44,7 @@ if opts[:from]
   end
 
 elsif opts[:to]
-  output = Whalespeak::Conversion.to_whalespeak text_to_convert
+  output = converter.to_whalespeak text_to_convert
 
   if opts[:randomize]
     puts randomize_capitalization output
