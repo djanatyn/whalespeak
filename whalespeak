@@ -2,18 +2,6 @@
 require 'trollop'
 require 'whalespeak'
 
-# ./whalespeak.rb
-#
-# converts text to and from the language of the whales
-#
-# works by:
-# - creating a mapping of digits to characters
-# - unpacking a string to it's binary representation
-# - converting that binary representation to a base-n string (where n is the number of characters used in the encoding)
-# - substituting each digit with it's mapping
-#
-# also randomizes capitalization because whales are expressive sometimes.
-
 usage = "usage: #{$0} <args> 'text to convert'"
 
 opts = Trollop::options do
