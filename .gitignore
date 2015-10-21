@@ -1,4 +1,5 @@
 *.gem
 doc/
 .yardinfo/
-.yardoc/*
+.yardoc/
+pkg/
