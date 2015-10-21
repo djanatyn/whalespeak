@@ -16,7 +16,7 @@ gem to be hosted on rubygems shortly.
 puts Whalespeak::CommonWhale.to_whalespeak('hello world')
 
 # create your own dialect
-my_dialect = Whalespeak::Converter.new ['a','b','c','d']
+my_dialect = Whalespeak::Dialect.new ['a','b','c','d']
 puts my_dialect.to_whalespeak('hello there')
 ```
 
