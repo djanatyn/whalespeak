@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'trollop'
 
 # converts text to and from the language of the whales
 #
@@ -79,9 +78,11 @@ module Whalespeak
     end
   end
 
-  class CommonWhale < Converter
-    def initialize
-      super $common_whale_alphabet
+  class CommonWhale
+    @@converter = Whalespeak::Converter.new $default_alphabet
+
+    def self.method_missing(method, *args, &block)
+      @@converter.send(method, *args)
     end
   end
 end
