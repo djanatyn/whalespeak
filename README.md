@@ -1,6 +1,8 @@
 # whalespeak
 converts text to and from the language of the whales
 
+live demo available on (zubkoland)[http://zubkoland.org/~djanatyn/whalespeak/translate/].
+
 ## installing
 ```
 git clone https://github.com/djanatyn/whalespeak.git --depth=1
