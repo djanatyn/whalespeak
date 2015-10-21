@@ -4,6 +4,9 @@ require 'sinatra'
 require 'json'
 require 'json-schema'
 
+set :port, 1234
+set :environment, :production
+
 # schema for translating
 $schema = {
   '$schema' => 'http://json-schema.org/draft-04/schema#',
@@ -16,8 +19,12 @@ $schema = {
   },
   'required' => ['text'],
 }
+
+get '/api/schema' do
+  return JSON.dump $schema
+end
     
-post '/translate/to' do
+post '/api/translate/to' do
   request.body.rewind; json = request.body.read
 
   begin
@@ -31,10 +38,10 @@ post '/translate/to' do
     response = JSON.dump({ exception: e.class, error: e.message })
   end
 
-  return JSON.dump(response) + "\n"
+  return response + "\n"
 end
 
-post '/translate/from' do
+post '/api/translate/from' do
   request.body.rewind; json = request.body.read
 
   begin
@@ -49,5 +56,12 @@ post '/translate/from' do
     response = JSON.dump({ exception: e.class, error: e.message })
   end
 
-  return response
+  return response + "\n"
+end
+
+not_found do
+  status 404
+
+  response = JSON.dump({ error: 'invalid api url'})
+  return response + "\n"
 end
