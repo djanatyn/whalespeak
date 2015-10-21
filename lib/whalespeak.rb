@@ -13,16 +13,28 @@ require 'set'
 
 $common_whale_alphabet = %w{o d u h w}
 
+# Module containing all whalespeak code.
 module Whalespeak
 
+  # Exceptions raised by whalespeak code.
   module Exceptions
+    # Raised when a dialect is created using an alphabet over 10 characters.
     class TooManyCharacters < StandardError; end
+    # Raised when the encoding doesn't look right when translating encoded text.
     class BadEncoding < StandardError; end
   end
 
-  class Converter
+  # A whalespeak lexicon; can convert text to and from a dialect of whalespeak.
+  class Dialect
+    # the alphabet being used in the current whale dialect
     attr_reader :alphabet
 
+    # Initializes a new dialect for converting text to whalespeak.
+    # 
+    # This method also generates a mapping of digits to characters for use in encoding.
+    #
+    # @param alphabet [Array<String>] an array of characters to use for creating the dialect
+    # @return [Whalespeak::Dialect] a dialect of whalespeak
     def initialize(alphabet)
       raise ArgumentError, "alphabet must be an array of characters" unless alphabet.class == Array
       @alphabet = alphabet
@@ -40,7 +52,7 @@ module Whalespeak
       @base = @mapping.length
     end
 
-    # Encode string text to whalespeak encoding.
+    # Encode text to whalespeak encoding.
     #
     # @param text [String] the text to encode
     # @return [String] the encoded text as whalespeak
@@ -60,6 +72,10 @@ module Whalespeak
       return whalespeak.join
     end
 
+    # Decode whalespeak to normal text.
+    #
+    # @param text [String] the text to decode
+    # @return [String] the decoded text
     def from_whalespeak text
       # validate the encoding
       character_set = Set.new @alphabet
@@ -86,12 +102,13 @@ module Whalespeak
     end
   end
 
+  # A standardized dialect for easy whale-to-whale communication.
   class CommonWhale
-    @@converter = Whalespeak::Converter.new $common_whale_alphabet
+    @@dialect = Whalespeak::Dialect.new $common_whale_alphabet
 
-    # this does not send blocks
+    # sends all methods to CommonWhale Whalespeak::Dialect object
     def self.method_missing(method, *args)
-      @@converter.send(method, *args)
+      @@dialect.send(method, *args)
     end
   end
 end
