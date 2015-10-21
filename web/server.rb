@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
 require 'whalespeak'
 require 'sinatra'
+require 'sinatra/cross_origin'
 require 'json'
 require 'json-schema'
+
+configure do
+  enable :cross_origin
+end
 
 set :port, 1234
 set :environment, :production
@@ -25,6 +30,11 @@ get '/api/schema' do
 end
     
 post '/api/translate/to' do
+  cross_origin :allow_origin => 'http://zubkoland.org',
+    :allow_methods => [:post],
+    :allow_credentials => false,
+    :max_age => "60"
+
   request.body.rewind; json = request.body.read
 
   begin
@@ -42,6 +52,11 @@ post '/api/translate/to' do
 end
 
 post '/api/translate/from' do
+  cross_origin :allow_origin => 'http://zubkoland.org',
+    :allow_methods => [:post],
+    :allow_credentials => false,
+    :max_age => "60"
+
   request.body.rewind; json = request.body.read
 
   begin
