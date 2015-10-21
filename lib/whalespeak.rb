@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 require 'trollop'
 
-# ./whalespeak.rb
-#
 # converts text to and from the language of the whales
 #
 # works by:
@@ -13,7 +11,7 @@ require 'trollop'
 #
 # also randomizes capitalization because whales are expressive sometimes.
 
-$default_alphabet = %w{o d u h w}
+$common_whale_alphabet = %w{o d u h w}
 
 module Whalespeak
 
@@ -22,24 +20,29 @@ module Whalespeak
   end
 
   class Converter
-    def initialize(alphabet = $default_alphabet)
+    attr_reader :alphabet
 
+    def initialize(alphabet)
       raise ArgumentError, "alphabet must be an array of characters" unless alphabet.class == Array
-      @@whale_characters = alphabet
+      @whale_characters = alphabet
 
-      if @@whale_characters.length > 10
+      if @whale_characters.length > 10
         raise Whalespeak::Exceptions::TooManyCharacters, "too many characters in the whale language"
       end
 
       # generate mapping
-      @@mapping = {}
-      (0..@@whale_characters.length - 1).each do |n|
-        @@mapping[n.to_s] = @@whale_characters[n]
+      @mapping = {}
+      (0..@whale_characters.length - 1).each do |n|
+        @mapping[n.to_s] = @whale_characters[n]
       end
 
-      @@base = @@mapping.length
+      @base = @mapping.length
     end
 
+    # Encode string text to whalespeak encoding.
+    #
+    # @param text [String] the text to encode
+    # @return [String] the encoded text as whalespeak
     def to_whalespeak text
       # convert the string supplied to binary
       binary = text.unpack('b*').first
@@ -48,20 +51,20 @@ module Whalespeak
       decimal_representation = binary.to_i(2)
 
       # convert decimal to base-n string
-      base_string = decimal_representation.to_s(@@base)
+      base_string = decimal_representation.to_s(@base)
 
       # convert each digit to the correct character
-      whalespeak = base_string.chars.map {|digit| char = @@mapping[digit]}
+      whalespeak = base_string.chars.map {|digit| char = @mapping[digit]}
 
       return whalespeak.join
     end
 
     def from_whalespeak text
       # convert each character to it's respective digit
-      base_string = text.chars.map {|char| @@mapping.invert[char]}.join
+      base_string = text.chars.map {|char| @mapping.invert[char]}.join
       
       # convert base-n string to decimal
-      decimal_representation = base_string.to_i(@@base)
+      decimal_representation = base_string.to_i(@base)
 
       # convert decimal back to binary
       binary = decimal_representation.to_s(2)
@@ -73,6 +76,12 @@ module Whalespeak
 
       # convert back to string
       return converted_text
+    end
+  end
+
+  class CommonWhale < Converter
+    def initialize
+      super $common_whale_alphabet
     end
   end
 end
