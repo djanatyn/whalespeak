@@ -28,7 +28,7 @@ post '/translate/to' do
     converted_text = Whalespeak::CommonWhale.to_whalespeak data['text']
     response = JSON.dump({ translation: converted_text})
   rescue => e
-    response = JSON.dump({ error: e.message })
+    response = JSON.dump({ exception: e.class, error: e.message })
   end
 
   return JSON.dump(response) + "\n"
@@ -46,7 +46,7 @@ post '/translate/from' do
     converted_text = Whalespeak::CommonWhale.from_whalespeak data['text']
     response = JSON.dump({ translation: converted_text })
   rescue => e
-    response = JSON.dump({ error: e.message })
+    response = JSON.dump({ exception: e.class, error: e.message })
   end
 
   return response
