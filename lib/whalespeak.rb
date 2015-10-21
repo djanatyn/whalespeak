@@ -16,8 +16,8 @@ $common_whale_alphabet = %w{o d u h w}
 module Whalespeak
 
   module Exceptions
-    class TooManyCharacters < Exception; end
-    class BadEncoding < Exception; end
+    class TooManyCharacters < StandardError; end
+    class BadEncoding < StandardError; end
   end
 
   class Converter
