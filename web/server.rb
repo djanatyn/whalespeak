@@ -18,33 +18,36 @@ $schema = {
 }
     
 post '/translate/to' do
-  # get request as JSON
-  request.body.rewind; data = JSON.parse request.body.read
+  request.body.rewind; json = request.body.read
 
   begin
-    JSON::Validator.validate!($schema, data, :strict => true)
-  rescue JSON::Schema::ValidationError
-    response = { error: $!.message }
-
-    return JSON.dump(response) + "\n"
+    # validate and parse JSON
+    JSON::Validator.validate!($schema, json, :strict => true)
+    data = JSON.parse json
+    
+    converted_text = Whalespeak::CommonWhale.to_whalespeak data['text']
+    response = JSON.dump({ translation: converted_text})
+  rescue => e
+    response = JSON.dump({ error: e.message })
   end
 
-  response = { translation: Whalespeak::CommonWhale.to_whalespeak(data['text']) }
   return JSON.dump(response) + "\n"
 end
 
 post '/translate/from' do
-  # get request as JSON
-  request.body.rewind; data = JSON.parse request.body.read
+  request.body.rewind; json = request.body.read
 
   begin
-    JSON::Validator.validate!($schema, data, :strict => true)
-  rescue JSON::Schema::ValidationError
-    response = { error: $!.message }
+    # validate and parse JSON
+    JSON::Validator.validate!($schema, json, :strict => true)
+    data = JSON.parse json
 
-    return JSON.dump(response) + "\n"
+    # convert and generate response
+    converted_text = Whalespeak::CommonWhale.from_whalespeak data['text']
+    response = JSON.dump({ translation: converted_text })
+  rescue => e
+    response = JSON.dump({ error: e.message })
   end
 
-  response = { translation: Whalespeak::CommonWhale.from_whalespeak(data['text']) }
-  return JSON.dump(response) + "\n"
+  return response
 end
