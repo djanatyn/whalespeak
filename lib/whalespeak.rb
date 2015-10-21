@@ -25,16 +25,16 @@ module Whalespeak
 
     def initialize(alphabet)
       raise ArgumentError, "alphabet must be an array of characters" unless alphabet.class == Array
-      @whale_characters = alphabet
+      @alphabet = alphabet
 
-      if @whale_characters.length > 10
-        raise Whalespeak::Exceptions::TooManyCharacters, "too many characters in the whale language"
+      if @alphabet.length > 10
+        raise Whalespeak::Exceptions::TooManyCharacters, 'too many characters in the whale language'
       end
 
       # generate mapping
       @mapping = {}
-      (0..@whale_characters.length - 1).each do |n|
-        @mapping[n.to_s] = @whale_characters[n]
+      (0..@alphabet.length - 1).each do |n|
+        @mapping[n.to_s] = @alphabet[n]
       end
 
       @base = @mapping.length
@@ -62,7 +62,7 @@ module Whalespeak
 
     def from_whalespeak text
       # validate the encoding
-      character_set = Set.new @whale_characters
+      character_set = Set.new @alphabet
       text_chars = text.chars.to_set
 
       raise Whalespeak::Exceptions::BadEncoding, "encoding looks wrong" unless text_chars.subset? character_set
