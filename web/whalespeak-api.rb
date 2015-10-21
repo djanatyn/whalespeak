@@ -6,6 +6,8 @@ require 'json'
 require 'json-schema'
 
 class WhalespeakAPI < Sinatra::Base
+  register Sinatra::CrossOrigin
+
   configure do
     enable :cross_origin
   end
