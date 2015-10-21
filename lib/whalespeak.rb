@@ -81,7 +81,8 @@ module Whalespeak
   class CommonWhale
     @@converter = Whalespeak::Converter.new $default_alphabet
 
-    def self.method_missing(method, *args, &block)
+    # this does not send blocks
+    def self.method_missing(method, *args)
       @@converter.send(method, *args)
     end
   end
