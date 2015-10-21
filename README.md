@@ -13,11 +13,16 @@ gem to be hosted on rubygems shortly.
 ## usage
 ```ruby
 # use the default dialect
-puts Whalespeak::CommonWhale.to_whalespeak('hello world')
+whale_greeting = Whalespeak::CommonWhale.to_whalespeak 'hello world'
+# => "dwuodoouohduwwuduuuwdddddhhdwwouwwhoo"
+Whalespeak::CommonWhale.from_whalespeak whale_greeting
+# => "hello world"
 
 # create your own dialect
 my_dialect = Whalespeak::Dialect.new ['a','b','c','d']
-puts my_dialect.to_whalespeak('hello there')
+my_dialect.to_whalespeak 'hello there' 
+# => "bbcccbcadbcadbcddbcaabaacdcabbcccbcbadcccbc"
+
 ```
 
 whalespeak also includes a command line program that uses Common Whale:
