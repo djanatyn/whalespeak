@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'set'
 
 # converts text to and from the language of the whales
 #
@@ -16,6 +17,7 @@ module Whalespeak
 
   module Exceptions
     class TooManyCharacters < Exception; end
+    class BadEncoding < Exception; end
   end
 
   class Converter
@@ -59,6 +61,12 @@ module Whalespeak
     end
 
     def from_whalespeak text
+      # validate the encoding
+      character_set = Set.new @whale_characters
+      text_chars = text.chars.to_set
+
+      raise Whalespeak::Exceptions::BadEncoding, "encoding looks wrong" unless text_chars.subset? character_set
+
       # convert each character to it's respective digit
       base_string = text.chars.map {|char| @mapping.invert[char]}.join
       
