@@ -57,6 +57,9 @@ module Whalespeak
     # @param text [String] the text to encode
     # @return [String] the encoded text as whalespeak
     def to_whalespeak text
+      # whalespeak is always in lowercase.
+      text.downcase!
+
       # convert the string supplied to binary
       binary = text.unpack('b*').first
 
@@ -77,6 +80,9 @@ module Whalespeak
     # @param text [String] the text to decode
     # @return [String] the decoded text
     def from_whalespeak text
+      # whalespeak is always in lowercase.
+      text.downcase!
+
       # validate the encoding
       character_set = Set.new @alphabet
       text_chars = text.chars.to_set
