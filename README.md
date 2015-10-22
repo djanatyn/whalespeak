@@ -1,8 +1,6 @@
 # whalespeak
 converts text to and from the language of the whales
 
-live demo available on [zubkoland](http://zubkoland.org/~djanatyn/whalespeak/translate/).
-
 ## installing
 ```
 git clone https://github.com/djanatyn/whalespeak.git --depth=1
@@ -31,6 +29,19 @@ whalespeak also includes a command line program that uses Common Whale:
 ```
 ./whalespeak <args> 'text to convert'
 ```
+
+## web interface + API
+
+There's a web interface for translating available on [zubkoland](http://whalespeak.zubkoland.org/). You can also send JSON to the REST API:
+
+```
+$ curl http://whalespeak.zubkoland.org/api/translate/to -d '{"text":"hello world"}'
+{"translation":"dwuodoouohduwwuduuuwdddddhhdwwouwwhoo"}
+$ curl http://whalespeak.zubkoland.org/api/translate/from -d '{"text":"dwuodoouohduwwuduuuwdddddhhdwwouwwhoo"}'
+{"translation":"hello world"}
+```
+
+(not very useful) schema available [here](http://whalespeak.zubkoland.org/api/schema).
 
 ## how?
 
