@@ -1,16 +1,12 @@
 #!/usr/bin/env ruby
 require 'whalespeak'
 require 'sinatra'
-require 'sinatra/cross_origin'
 require 'json'
 require 'json-schema'
 
 class WhalespeakAPI < Sinatra::Base
-  register Sinatra::CrossOrigin
 
-  configure do
-    enable :cross_origin
-  end
+  set :public_folder, 'public'
 
   # schema for translating
   $schema = {
@@ -25,16 +21,15 @@ class WhalespeakAPI < Sinatra::Base
     'required' => ['text'],
   }
 
+  get '/' do
+    File.new('public/index.html').readlines
+  end
+
   get '/api/schema' do
     return JSON.dump $schema
   end
       
   post '/api/translate/to' do
-    cross_origin :allow_origin => 'http://zubkoland.org',
-      :allow_methods => [:post],
-      :allow_credentials => false,
-      :max_age => "60"
-
     request.body.rewind; json = request.body.read
 
     begin
@@ -52,11 +47,6 @@ class WhalespeakAPI < Sinatra::Base
   end
 
   post '/api/translate/from' do
-    cross_origin :allow_origin => 'http://zubkoland.org',
-      :allow_methods => [:post],
-      :allow_credentials => false,
-      :max_age => "60"
-
     request.body.rewind; json = request.body.read
 
     begin
