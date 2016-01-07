@@ -3,3 +3,4 @@ doc/
 .yardinfo/
 .yardoc/
 pkg/
+.*
