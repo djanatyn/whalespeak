@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.authors     = ["Jonathan Strickland"]
   s.email       = 'djanatyn@gmail.com'
   s.files       = ["lib/whalespeak.rb"]
-  s.homepage    =
-    'https://github.com/djanatyn/whalespeak'
-  s.license       = 'MIT'
+  s.homepage    = 'https://github.com/djanatyn/whalespeak'
+  s.license     = 'MIT'
 end
