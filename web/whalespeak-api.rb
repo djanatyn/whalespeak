@@ -6,7 +6,7 @@ require 'json-schema'
 
 class WhalespeakAPI < Sinatra::Base
 
-  set :public_folder, 'public'
+  set :public_folder, './web/public'
 
   # schema for translating
   $schema = {
@@ -22,7 +22,7 @@ class WhalespeakAPI < Sinatra::Base
   }
 
   get '/' do
-    File.new('public/index.html').readlines
+    File.new('./web/public/index.html').readlines
   end
 
   get '/api/schema' do
